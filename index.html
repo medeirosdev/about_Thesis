@@ -268,12 +268,12 @@
     <p class="lead reveal">Telas reais da plataforma funcionando. Clique em cada seção para ver — e na imagem para ampliar.</p>
     <div class="gallery">
       <div class="g-tabs" id="gTabs" role="tablist">
-        <button class="g-tab on" role="tab" data-img="report" data-cap="Score de novidade de 0 a 100, indicadores da área e uma síntese da IA com citações numeradas e clicáveis."><strong>Visão geral</strong><span>Veredito, números da área e síntese</span></button>
+        <button class="g-tab on" role="tab" data-img="report" data-cap="Score de novidade de 0 a 100, números reais da área vindos do OpenAlex (trabalhos, autores, países, crescimento) e uma síntese com citações clicáveis."><strong>Visão geral</strong><span>Veredito, números da área e síntese</span></button>
         <button class="g-tab" role="tab" data-img="prior" data-cap="A ideia é comparada com os 3 trabalhos mais próximos em 6 dimensões — problema, método, dados, contexto, métrica e desenho — e com patentes."><strong>Já foi feito?</strong><span>Comparação com trabalhos e patentes</span></button>
-        <button class="g-tab" role="tab" data-img="people" data-cap="Rede de colaboração, pesquisadores com h-index e potencial de encaixe, filtro para quem está no Brasil e laboratórios ativos."><strong>Pesquisadores</strong><span>Quem trabalha no tema</span></button>
-        <button class="g-tab" role="tab" data-img="limits" data-cap="As limitações que mais aparecem na literatura, com frequência, severidade e como mitigar — e um checklist de robustez do seu projeto."><strong>Limitações</strong><span>O que costuma dar errado</span></button>
+        <button class="g-tab" role="tab" data-img="people" data-cap="Pesquisadores reais do OpenAlex com h-index, instituição e link para o perfil (ORCID), a rede de coautorias entre eles e as instituições com mais trabalhos no tema."><strong>Pesquisadores</strong><span>Quem trabalha no tema</span></button>
+        <button class="g-tab" role="tab" data-img="limits" data-cap="Limitações recorrentes na pesquisa da área, com severidade e como mitigar, e um checklist de robustez do seu projeto. Nesta versão, são padrões estimados (sinalizados na tela)."><strong>Limitações</strong><span>O que costuma dar errado</span></button>
         <button class="g-tab" role="tab" data-img="gaps" data-cap="Lacunas ranqueadas por potencial, com hipótese sugerida. Um clique transforma a lacuna em nova pesquisa ou em projeto."><strong>Lacunas</strong><span>Onde está a oportunidade</span></button>
-        <button class="g-tab" role="tab" data-img="paper" data-cap="Cada artigo com TL;DR, por que importa para a sua ideia, método, limitações e citação pronta em ABNT, APA ou BibTeX."><strong>Artigos</strong><span>Leitura guiada e citações</span></button>
+        <button class="g-tab" role="tab" data-img="paper" data-cap="Artigos reais com resumo original, por que importam para a sua ideia, link para o artigo (DOI) e citação pronta em ABNT, APA ou BibTeX."><strong>Artigos</strong><span>Leitura guiada e citações</span></button>
         <button class="g-tab" role="tab" data-img="chat" data-cap="Pergunte qualquer coisa ao relatório: quem contatar, quais datasets usar, quais editais estão abertos."><strong>Chat com o relatório</strong><span>Perguntas em linguagem natural</span></button>
         <button class="g-tab" role="tab" data-img="write" data-cap="Revisão de literatura, abstract em inglês, justificativa para edital, e-mail para colaborador e pitch — escritos a partir das fontes do relatório."><strong>Escrever com IA</strong><span>Do relatório ao texto</span></button>
       </div>
@@ -298,7 +298,7 @@
         <p>Em português, numa frase ou num resumo. Dá para refinar com IA (pergunta de pesquisa, hipótese, recorte PICO), ditar ou anexar um rascunho.</p>
         <img src="assets/screens/home.jpg" alt="Tela para descrever a ideia" data-zoom /></div>
       <div class="step reveal"><span class="n">02</span><h3>Os agentes pesquisam</h3>
-        <p>A ideia vira conceitos e consultas; as fontes são buscadas, deduplicadas, ranqueadas e lidas. Você acompanha cada etapa ao vivo.</p>
+        <p>A ideia em português vira uma consulta em inglês; o OpenAlex devolve os trabalhos, autores e números da área, e o GitHub os repositórios. Você acompanha cada etapa.</p>
         <img src="assets/screens/pipeline.jpg" alt="Pipeline de pesquisa em andamento" data-zoom /></div>
       <div class="step reveal"><span class="n">03</span><h3>Receba e use o relatório</h3>
         <p>Navegue pelas seções, salve artigos, monitore o tema com alertas e exporte para PDF, BibTeX, Markdown ou CSV.</p>
@@ -342,7 +342,9 @@
         <div class="arrow"></div>
         <div class="node dark-node"><strong>API — Python + FastAPI</strong><span>Motor de relatórios, auth JWT, chat, escrita, exportações</span><em>:8000</em></div>
         <div class="arrow"></div>
-        <div class="node"><strong>PostgreSQL 16</strong><span>Usuários, relatórios (JSONB), chats, salvos e alertas</span><em>:5432</em></div>
+        <div class="node"><strong>OpenAlex · GitHub</strong><span>Artigos, autores, instituições, publicações por ano e repositórios reais</span><em>APIs</em></div>
+        <div class="arrow"></div>
+        <div class="node"><strong>PostgreSQL 16</strong><span>Usuários, relatórios (JSONB), chats, salvos, alertas e cache das APIs</span><em>:5432</em></div>
       </div>
       <div class="reveal" id="rodar">
         <h3 style="font-size:22px;letter-spacing:-0.02em">Sobe com um comando</h3>
@@ -361,26 +363,28 @@
   <div class="wrap">
     <p class="eyebrow">Estado atual · transparência</p>
     <h2 class="reveal">O que já funciona <em>e o que vem a seguir.</em></h2>
-    <p class="lead reveal">O produto está completo de ponta a ponta. Nesta versão, o conteúdo bibliográfico é gerado por um motor
-      próprio que simula as fontes, para validar a experiência antes de conectar as bases reais.</p>
+    <p class="lead reveal">O produto funciona de ponta a ponta e já usa <strong>dados científicos reais</strong>: artigos, pesquisadores
+      e números da área vêm do OpenAlex. O que ainda é estimado aparece sinalizado na própria interface.</p>
     <div class="status">
       <div class="card reveal"><h3>Funcionando hoje</h3>
         <ul>
           <li>Cadastro, login e conta de demonstração</li>
-          <li>Relatório completo a partir de qualquer ideia em português, salvo no banco</li>
-          <li>Score de novidade e comparação com trabalhos próximos</li>
-          <li>Pesquisadores, limitações, lacunas, datasets e editais</li>
-          <li>Chat com o relatório e “Escrever com IA” (5 modelos de texto)</li>
-          <li>Biblioteca, alertas de monitoramento e exportação .bib / .md / .csv</li>
-          <li>Testes automatizados da API e deploy com Docker</li>
+          <li>Relatório a partir de qualquer ideia em português, salvo no banco</li>
+          <li><strong>Artigos reais</strong> do OpenAlex com resumo original, DOI, citações e acesso aberto</li>
+          <li><strong>Pesquisadores reais</strong> com h-index, instituição, país, ORCID e rede de coautorias</li>
+          <li><strong>Publicações por ano</strong> e crescimento da área, reais</li>
+          <li><strong>Repositórios de código reais</strong> do GitHub</li>
+          <li>Chat com o relatório, “Escrever com IA” (5 modelos de texto), biblioteca, alertas e exportação .bib / .md / .csv</li>
+          <li>Cache das APIs no banco, queda segura para dados simulados sem internet, testes automatizados e deploy com Docker</li>
         </ul></div>
-      <div class="card reveal todo"><h3>Simulado nesta versão</h3>
+      <div class="card reveal todo"><h3>Ainda estimado ou simulado</h3>
         <ul>
-          <li>Artigos, autores e patentes são gerados pelo motor (determinístico: a mesma ideia gera o mesmo relatório)</li>
-          <li>Respostas do chat e textos seguem modelos a partir dos dados do relatório</li>
+          <li>Score de novidade: estimado pelo volume de publicações e pela proximidade dos artigos reais (a comparação por LLM está no roadmap)</li>
+          <li>Limitações, lacunas, patentes e comparação por dimensão</li>
+          <li>Respostas do chat e textos seguem modelos preenchidos com os dados reais do relatório (ainda sem LLM)</li>
           <li>Integrações (Zotero, Overleaf, Notion) e convites ainda não enviam dados</li>
         </ul>
-        <p style="margin:16px 0 0;font-size:14px;color:var(--muted)">O formato do relatório já é o definitivo: trocar o motor por buscas reais não exige mudar o frontend.</p></div>
+        <p style="margin:16px 0 0;font-size:14px;color:var(--muted)">Cada seção estimada leva o selo “estimado” ou “simulado” na interface.</p></div>
     </div>
   </div>
 </section>
@@ -391,10 +395,10 @@
     <p class="eyebrow">Roadmap</p>
     <h2 class="reveal">Próximos <em>passos.</em></h2>
     <div class="road">
-      <div class="card now reveal"><span class="tag">AGORA · MVP</span><h3 style="margin:10px 0 0">Experiência completa</h3>
-        <ul><li>Fluxo ideia → relatório → escrita</li><li>Contas, histórico e alertas</li><li>Deploy em um comando</li></ul></div>
-      <div class="card reveal"><span class="tag">PRÓXIMO</span><h3 style="margin:10px 0 0">Dados reais</h3>
-        <ul><li>OpenAlex e Semantic Scholar para artigos, autores e citações</li><li>arXiv, PubMed e SciELO</li><li>Busca de patentes</li></ul></div>
+      <div class="card now reveal"><span class="tag">AGORA · MVP</span><h3 style="margin:10px 0 0">Produto com dados reais</h3>
+        <ul><li>Fluxo ideia → relatório → escrita</li><li>Artigos, autores e números reais (OpenAlex) e repositórios (GitHub)</li><li>Contas, histórico, alertas e deploy em um comando</li></ul></div>
+      <div class="card reveal"><span class="tag">PRÓXIMO</span><h3 style="margin:10px 0 0">Mais fontes</h3>
+        <ul><li>Semantic Scholar, arXiv, PubMed e SciELO</li><li>Busca de patentes</li><li>Pesquisa em segundo plano com progresso real</li></ul></div>
       <div class="card reveal"><span class="tag">DEPOIS</span><h3 style="margin:10px 0 0">IA ancorada nas fontes</h3>
         <ul><li>LLM para síntese, chat e escrita com citações verificáveis</li><li>Leitura de PDF completo</li><li>Workspaces para laboratórios</li></ul></div>
     </div>
